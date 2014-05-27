@@ -91,7 +91,7 @@ graphene_point3d_init (graphene_point3d_t *p,
                        float               y,
                        float               z)
 {
-  g_return_val_if_fail (p != NULL, NULL);
+  graphene_return_val_if_fail (p != NULL, NULL);
 
   p->x = x;
   p->y = y;
@@ -115,8 +115,8 @@ graphene_point3d_t *
 graphene_point3d_init_from_point (graphene_point3d_t       *p,
                                   const graphene_point3d_t *src)
 {
-  g_return_val_if_fail (p != NULL, NULL);
-  g_return_val_if_fail (src != NULL, p);
+  graphene_return_val_if_fail (p != NULL, NULL);
+  graphene_return_val_if_fail (src != NULL, p);
 
   *p = *src;
 
@@ -138,8 +138,8 @@ graphene_point3d_t *
 graphene_point3d_init_from_vec3 (graphene_point3d_t    *p,
                                  const graphene_vec3_t *v)
 {
-  g_return_val_if_fail (p != NULL, NULL);
-  g_return_val_if_fail (v != NULL, p);
+  graphene_return_val_if_fail (p != NULL, NULL);
+  graphene_return_val_if_fail (v != NULL, p);
 
   return graphene_point3d_init_from_simd4f (p, v->value);
 }
@@ -148,8 +148,8 @@ void
 graphene_point3d_to_vec3 (const graphene_point3d_t *p,
                           graphene_vec3_t          *v)
 {
-  g_return_if_fail (p != NULL);
-  g_return_if_fail (v != NULL);
+  graphene_return_if_fail (p != NULL);
+  graphene_return_if_fail (v != NULL);
 
   v->value = graphene_simd4f_init (p->x, p->y, p->z, 0.f);
 }
@@ -174,7 +174,7 @@ graphene_point3d_near (const graphene_point3d_t *a,
 {
   graphene_simd4f_t v_a, v_b, v_res;
 
-  g_return_val_if_fail (a != NULL && b != NULL, false);
+  graphene_return_val_if_fail (a != NULL && b != NULL, false);
 
   if (a == b)
     return true;
@@ -195,8 +195,8 @@ graphene_point3d_scale (const graphene_point3d_t *p,
 {
   graphene_simd4f_t v;
 
-  g_return_if_fail (p != NULL);
-  g_return_if_fail (res != NULL);
+  graphene_return_if_fail (p != NULL);
+  graphene_return_if_fail (res != NULL);
 
   v = graphene_simd4f_init (p->x, p->y, p->z, 0.f);
   v = graphene_simd4f_mul (v, graphene_simd4f_splat (factor));
@@ -211,8 +211,8 @@ graphene_point3d_cross (const graphene_point3d_t *a,
 {
   graphene_simd4f_t av, bv, resv;
 
-  g_return_if_fail (a != NULL && b != NULL);
-  g_return_if_fail (res != NULL);
+  graphene_return_if_fail (a != NULL && b != NULL);
+  graphene_return_if_fail (res != NULL);
 
   av = graphene_simd4f_init (a->x, a->y, a->z, 0.f);
   bv = graphene_simd4f_init (b->x, b->y, b->z, 0.f);
@@ -227,7 +227,7 @@ graphene_point3d_dot (const graphene_point3d_t *a,
 {
   graphene_simd4f_t av, bv, resv;
 
-  g_return_val_if_fail (a != NULL && b != NULL, 0.f);
+  graphene_return_val_if_fail (a != NULL && b != NULL, 0.f);
 
   av = graphene_simd4f_init (a->x, a->y, a->z, 0.f);
   bv = graphene_simd4f_init (b->x, b->y, b->z, 0.f);
@@ -241,7 +241,7 @@ graphene_point3d_length (const graphene_point3d_t *p)
 {
   graphene_simd4f_t res;
 
-  g_return_val_if_fail (p != NULL, 0.f);
+  graphene_return_val_if_fail (p != NULL, 0.f);
 
   res = graphene_simd4f_init (p->x, p->y, p->z, 0.f);
 
@@ -263,8 +263,8 @@ graphene_point3d_normalize (const graphene_point3d_t *p,
 {
   graphene_simd4f_t v;
 
-  g_return_if_fail (p != NULL);
-  g_return_if_fail (res != NULL);
+  graphene_return_if_fail (p != NULL);
+  graphene_return_if_fail (res != NULL);
 
   v = graphene_simd4f_init (p->x, p->y, p->z, 0.f);
   v = graphene_simd4f_normalize3 (v);
@@ -293,8 +293,8 @@ graphene_point3d_interpolate (const graphene_point3d_t *a,
 {
   graphene_simd4f_t a_v, b_v, r_v;
 
-  g_return_if_fail (a != NULL && b != NULL);
-  g_return_if_fail (res != NULL);
+  graphene_return_if_fail (a != NULL && b != NULL);
+  graphene_return_if_fail (res != NULL);
 
   /* linear interpolation: r = a + (b - a) * f */
   a_v = graphene_simd4f_init (a->x, a->y, a->z, 0.f);
@@ -312,9 +312,9 @@ const graphene_point3d_t *
 graphene_point3d_zero (void)
 {
 #ifdef GRAPHENE_ENABLE_DEBUG
-  g_assert (_graphene_point3d_zero.x == 0.f);
-  g_assert (_graphene_point3d_zero.y == 0.f);
-  g_assert (_graphene_point3d_zero.z == 0.f);
+  graphene_assert (_graphene_point3d_zero.x == 0.f);
+  graphene_assert (_graphene_point3d_zero.y == 0.f);
+  graphene_assert (_graphene_point3d_zero.z == 0.f);
 #endif
 
   return &_graphene_point3d_zero;

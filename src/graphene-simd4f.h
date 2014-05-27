@@ -42,12 +42,12 @@
 #include "graphene-simd4f-common.h"
 
 #ifdef GRAPHENE_ENABLE_DEBUG
-# define GRAPHENE_SIMD4F_DEBUG(vec)             G_STMT_START { \
+# define GRAPHENE_SIMD4F_DEBUG(vec)             do { \
   g_debug ("simd4f(%.6f,%.6f,%.6f,%.6f)", \
            graphene_simd4f_get_x (vec), \
            graphene_simd4f_get_y (vec), \
            graphene_simd4f_get_z (vec), \
-           graphene_simd4f_get_w (vec));        } G_STMT_END
+           graphene_simd4f_get_w (vec));        } while (0)
 #else
 # define GRAPHENE_SIMD4F_DEBUG(vec)
 #endif

@@ -30,7 +30,7 @@
 static void
 graphene_rect_normalize_internal (graphene_rect_t *r)
 {
-  if (G_LIKELY (r->size.width >= 0.f && r->size.height >= 0.f))
+  if (r->size.width >= 0.f && r->size.height >= 0.f)
     return;
 
   if (r->size.width < 0.f)
@@ -69,7 +69,7 @@ graphene_rect_init (graphene_rect_t *r,
                     float            width,
                     float            height)
 {
-  g_return_val_if_fail (r != NULL, NULL);
+  graphene_return_val_if_fail (r != NULL, NULL);
 
   r->origin.x = x;
   r->origin.y = y;
@@ -85,8 +85,8 @@ graphene_rect_t *
 graphene_rect_init_from_rect (graphene_rect_t       *r,
                               const graphene_rect_t *src)
 {
-  g_return_val_if_fail (r != NULL, NULL);
-  g_return_val_if_fail (src != NULL, r);
+  graphene_return_val_if_fail (r != NULL, NULL);
+  graphene_return_val_if_fail (src != NULL, r);
 
   *r = *src;
 
@@ -118,7 +118,7 @@ graphene_rect_equal (const graphene_rect_t *a,
 graphene_rect_t *
 graphene_rect_normalize (graphene_rect_t *r)
 {
-  g_return_val_if_fail (r != NULL, NULL);
+  graphene_return_val_if_fail (r != NULL, NULL);
 
   graphene_rect_normalize_internal (r);
 
@@ -131,8 +131,8 @@ graphene_rect_get_center (const graphene_rect_t  *r,
 {
   graphene_rect_t rr;
 
-  g_return_if_fail (r != NULL);
-  g_return_if_fail (p != NULL);
+  graphene_return_if_fail (r != NULL);
+  graphene_return_if_fail (p != NULL);
 
   rr = *r;
   graphene_rect_normalize_internal (&rr);
@@ -148,8 +148,8 @@ graphene_rect_get_top_left (const graphene_rect_t  *r,
 {
   graphene_rect_t rr;
 
-  g_return_if_fail (r != NULL);
-  g_return_if_fail (p != NULL);
+  graphene_return_if_fail (r != NULL);
+  graphene_return_if_fail (p != NULL);
 
   rr = *r;
   graphene_rect_normalize_internal (&rr);
@@ -163,8 +163,8 @@ graphene_rect_get_top_right (const graphene_rect_t *r,
 {
   graphene_rect_t rr;
 
-  g_return_if_fail (r != NULL);
-  g_return_if_fail (p != NULL);
+  graphene_return_if_fail (r != NULL);
+  graphene_return_if_fail (p != NULL);
 
   rr = *r;
   graphene_rect_normalize_internal (&rr);
@@ -178,8 +178,8 @@ graphene_rect_get_bottom_left (const graphene_rect_t *r,
 {
   graphene_rect_t rr;
 
-  g_return_if_fail (r != NULL);
-  g_return_if_fail (p != NULL);
+  graphene_return_if_fail (r != NULL);
+  graphene_return_if_fail (p != NULL);
 
   rr = *r;
   graphene_rect_normalize_internal (&rr);
@@ -193,8 +193,8 @@ graphene_rect_get_bottom_right (const graphene_rect_t  *r,
 {
   graphene_rect_t rr;
 
-  g_return_if_fail (r != NULL);
-  g_return_if_fail (p != NULL);
+  graphene_return_if_fail (r != NULL);
+  graphene_return_if_fail (p != NULL);
 
   rr = *r;
   graphene_rect_normalize_internal (&rr);
@@ -210,7 +210,7 @@ graphene_rect_get_##field (const graphene_rect_t *r) \
 { \
   graphene_rect_t rr; \
 \
-  g_return_val_if_fail (r != NULL, 0.f); \
+  graphene_return_val_if_fail (r != NULL, 0.f); \
 \
   rr = *r; \
   graphene_rect_normalize_internal (&rr); \
@@ -232,8 +232,8 @@ graphene_rect_union (const graphene_rect_t *a,
 {
   graphene_rect_t ra, rb;
 
-  g_return_if_fail (a != NULL && b != NULL);
-  g_return_if_fail (res != NULL);
+  graphene_return_if_fail (a != NULL && b != NULL);
+  graphene_return_if_fail (res != NULL);
 
   ra = *a;
   rb = *b;
@@ -241,11 +241,11 @@ graphene_rect_union (const graphene_rect_t *a,
   graphene_rect_normalize_internal (&ra);
   graphene_rect_normalize_internal (&rb);
 
-  res->origin.x = MIN (ra.origin.x, rb.origin.x);
-  res->origin.y = MIN (ra.origin.y, rb.origin.y);
+  res->origin.x = ra.origin.x < rb.origin.x ? ra.origin.x : rb.origin.x;
+  res->origin.y = ra.origin.y < rb.origin.y ? ra.origin.y : rb.origin.y;
 
-  res->size.width = MAX (ra.size.width, rb.size.width);
-  res->size.height = MAX (ra.size.height, rb.size.height);
+  res->size.width = ra.size.width > rb.size.width ? ra.size.width : rb.size.width;
+  res->size.height = ra.size.height > rb.size.height ? ra.size.height : rb.size.height;
 }
 
 bool
@@ -256,7 +256,7 @@ graphene_rect_intersection (const graphene_rect_t *a,
   graphene_rect_t ra, rb;
   float x_1, y_1, x_2, y_2;
 
-  g_return_val_if_fail (a != NULL && b != NULL, false);
+  graphene_return_val_if_fail (a != NULL && b != NULL, false);
 
   ra = *a;
   rb = *b;
@@ -264,10 +264,14 @@ graphene_rect_intersection (const graphene_rect_t *a,
   graphene_rect_normalize_internal (&ra);
   graphene_rect_normalize_internal (&rb);
 
-  x_1 = MAX (ra.origin.x, rb.origin.x);
-  y_1 = MAX (ra.origin.y, rb.origin.y);
-  x_2 = MIN (ra.origin.x + ra.size.width, rb.origin.x + rb.size.width);
-  y_2 = MIN (ra.origin.y + ra.size.height, rb.origin.x + rb.size.height);
+  x_1 = ra.origin.x > rb.origin.x ? ra.origin.x : rb.origin.x;
+  y_1 = ra.origin.y > rb.origin.y ? ra.origin.y : rb.origin.y;
+  x_2 = ra.origin.x + ra.size.width < rb.origin.x + rb.size.width
+      ? ra.origin.x + ra.size.width
+      : rb.origin.x + rb.size.width;
+  y_2 = ra.origin.y + ra.size.height < rb.origin.x + rb.size.height
+      ? ra.origin.y + ra.size.height
+      : rb.origin.y + rb.size.height;
 
   if (x_1 >= x_2 || y_1 >= y_2)
     {
@@ -289,7 +293,7 @@ graphene_rect_contains_point (const graphene_rect_t  *r,
 {
   graphene_rect_t rr;
 
-  g_return_val_if_fail (r != NULL && p != NULL, false);
+  graphene_return_val_if_fail (r != NULL && p != NULL, false);
 
   rr = *r;
   graphene_rect_normalize_internal (&rr);
@@ -306,7 +310,7 @@ graphene_rect_contains_rect (const graphene_rect_t *a,
 {
   graphene_rect_t res;
 
-  g_return_val_if_fail (a != NULL && b != NULL, false);
+  graphene_return_val_if_fail (a != NULL && b != NULL, false);
 
   graphene_rect_union (a, b, &res);
 
@@ -318,7 +322,7 @@ graphene_rect_offset (graphene_rect_t *r,
                       float            d_x,
                       float            d_y)
 {
-  g_return_if_fail (r != NULL);
+  graphene_return_if_fail (r != NULL);
 
   graphene_rect_normalize_internal (r);
 
@@ -331,7 +335,7 @@ graphene_rect_inset (graphene_rect_t *r,
                      float            d_x,
                      float            d_y)
 {
-  g_return_if_fail (r != NULL);
+  graphene_return_if_fail (r != NULL);
 
   graphene_rect_normalize_internal (r);
 
@@ -358,7 +362,7 @@ graphene_rect_inset (graphene_rect_t *r,
 void
 graphene_rect_round_to_pixel (graphene_rect_t *r)
 {
-  g_return_if_fail (r != NULL);
+  graphene_return_if_fail (r != NULL);
 
   graphene_rect_normalize_internal (r);
 
@@ -377,8 +381,8 @@ graphene_rect_interpolate (const graphene_rect_t *a,
 {
   graphene_rect_t ra, rb;
 
-  g_return_if_fail (a != NULL && b != NULL);
-  g_return_if_fail (res != NULL);
+  graphene_return_if_fail (a != NULL && b != NULL);
+  graphene_return_if_fail (res != NULL);
 
   ra = *a;
   graphene_rect_normalize_internal (&ra);

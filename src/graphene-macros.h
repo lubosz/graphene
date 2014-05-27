@@ -28,6 +28,9 @@
 #error "Only graphene.h can be included directly."
 #endif
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #ifndef _GRAPHENE_PUBLIC
 #define _GRAPHENE_PUBLIC        extern
 #endif
@@ -57,6 +60,53 @@
 #else
 #define GRAPHENE_BEGIN_DECLS
 #define GRAPHENE_END_DECLS
+#endif
+
+#if defined(__GNUC__) && (__GNUC__ > 2) && defined(__OPTIMIZE__)
+#define likely(x)       (__builtin_expect((x), 1))
+#define unlikely(x)     (__builtin_expect((x), 0))
+#endif
+
+#if defined (__GNUC__) && defined (__cplusplus)
+#define _GRAPHENE_STRFUNC       ((const char*) (__PRETTY_FUNCTION__))
+#elif defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
+#define _GRAPHENE_STRFUNC       ((const char*) (__func__))
+#elif defined (__GNUC__) || (defined(_MSC_VER) && (_MSC_VER > 1300))
+#define _GRAPHENE_STRFUNC       ((const char*) (__FUNCTION__))
+#else
+#define _GRAPHENE_STRFUNC       ((const char*) ("???"))
+#endif
+
+#ifdef G_DISABLE_CHECKS
+#define graphene_return_if_fail(x)
+#define graphene_return_val_if_fail(x,res)
+#else
+#define graphene_return_if_fail(x) \
+  if (likely (x)) { } \
+  else { \
+    fprintf (stderr, "Graphene: %s: '%s' failed\n", _GRAPHENE_STRFUNC, #x); \
+    return; \
+  }
+#define graphene_return_val_if_fail(x,res) \
+  if (likely (x)) { } \
+  else { \
+    fprintf (stderr, "Graphene: %s: '%s' failed\n", _GRAPHENE_STRFUNC, #x); \
+    return (res); \
+  }
+#endif
+
+#ifdef G_DISABLE_ASSERT
+#define graphene_assert(x)
+#define graphene_assert_not_reached()
+#else
+#define graphene_assert(x) \
+  if (likely (x)) { } \
+  else { \
+    fprintf (stderr, "Graphene: %s: assertion '%s' failed\n", _GRAPHENE_STRFUNC, #x); \
+    abort (); \
+  }
+#define graphene_assert_not_reached() \
+  fprintf (stderr, "Graphene: %s: code should not be reached.\n", _GRAPHENE_STRFUNC)
 #endif
 
 #endif /* __GRAPHENE_MACROS_H__ */

@@ -52,7 +52,7 @@ graphene_size_init (graphene_size_t *s,
                     float            width,
                     float            height)
 {
-  g_return_val_if_fail (s != NULL, NULL);
+  graphene_return_val_if_fail (s != NULL, NULL);
 
   s->width = width;
   s->height = height;
@@ -64,8 +64,8 @@ graphene_size_t *
 graphene_size_init_from_size (graphene_size_t       *s,
                               const graphene_size_t *src)
 {
-  g_return_val_if_fail (s != NULL, NULL);
-  g_return_val_if_fail (src != NULL, s);
+  graphene_return_val_if_fail (s != NULL, NULL);
+  graphene_return_val_if_fail (src != NULL, s);
 
   *s = *src;
 
@@ -91,8 +91,8 @@ graphene_size_scale (const graphene_size_t *s,
                      float                  factor,
                      graphene_size_t       *res)
 {
-  g_return_if_fail (s != NULL);
-  g_return_if_fail (res != NULL);
+  graphene_return_if_fail (s != NULL);
+  graphene_return_if_fail (res != NULL);
 
   *res = *s;
 
@@ -106,8 +106,8 @@ graphene_size_interpolate (const graphene_size_t *a,
                            double                 factor,
                            graphene_size_t       *res)
 {
-  g_return_if_fail (a != NULL && b != NULL);
-  g_return_if_fail (res != NULL);
+  graphene_return_if_fail (a != NULL && b != NULL);
+  graphene_return_if_fail (res != NULL);
 
   res->width = a->width + (b->width - a->width) * factor;
   res->height = a->height + (b->height - a->height) * factor;
@@ -119,8 +119,8 @@ const graphene_size_t *
 graphene_size_zero (void)
 {
 #ifdef GRAPHENE_ENABLE_DEBUG
-  g_assert (_graphene_size_zero.width == 0.f);
-  g_assert (_graphene_size_zero.height == 0.f);
+  graphene_assert (_graphene_size_zero.width == 0.f);
+  graphene_assert (_graphene_size_zero.height == 0.f);
 #endif
 
   return &_graphene_size_zero;

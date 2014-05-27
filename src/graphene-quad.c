@@ -46,8 +46,8 @@ graphene_quad_init (graphene_quad_t        *q,
                     const graphene_point_t *p3,
                     const graphene_point_t *p4)
 {
-  g_return_val_if_fail (q != NULL, NULL);
-  g_return_val_if_fail (p1 != NULL && p2 != NULL && p3 != NULL && p4 != NULL, q);
+  graphene_return_val_if_fail (q != NULL, NULL);
+  graphene_return_val_if_fail (p1 != NULL && p2 != NULL && p3 != NULL && p4 != NULL, q);
 
   q->points[0] = *p1;
   q->points[1] = *p2;
@@ -61,8 +61,8 @@ graphene_quad_t *
 graphene_quad_init_from_rect (graphene_quad_t       *q,
                               const graphene_rect_t *r)
 {
-  g_return_val_if_fail (q != NULL, NULL);
-  g_return_val_if_fail (r != NULL, q);
+  graphene_return_val_if_fail (q != NULL, NULL);
+  graphene_return_val_if_fail (r != NULL, q);
 
   graphene_rect_get_top_left (r, &(q->points[0]));
   graphene_rect_get_top_right (r, &(q->points[1]));
@@ -78,8 +78,8 @@ graphene_quad_contains (const graphene_quad_t  *q,
 {
   graphene_line_segment_t l1, l2, l3, l4;
 
-  g_return_val_if_fail (q != NULL, false);
-  g_return_val_if_fail (p != NULL, false);
+  graphene_return_val_if_fail (q != NULL, false);
+  graphene_return_val_if_fail (p != NULL, false);
 
   l1 = graphene_line_segment_init (&q->points[0], &q->points[1]);
   l2 = graphene_line_segment_init (&q->points[1], &q->points[2]);
@@ -100,19 +100,19 @@ graphene_quad_bounds (const graphene_quad_t *q,
   float min_y, max_y;
   int i;
 
-  g_return_if_fail (q != NULL);
-  g_return_if_fail (r != NULL);
+  graphene_return_if_fail (q != NULL);
+  graphene_return_if_fail (r != NULL);
 
   min_x = max_x = q->points[0].x;
   min_y = max_y = q->points[0].y;
 
   for (i = 1; i < 4; i += 1)
     {
-      min_x = MIN (q->points[i].x, min_x);
-      min_y = MIN (q->points[i].y, min_y);
+      min_x = q->points[i].x < min_x ? q->points[i].x : min_x;
+      min_y = q->points[i].y < min_y ? q->points[i].y : min_y;
 
-      max_x = MAX (q->points[i].x, max_x);
-      max_y = MAX (q->points[i].y, max_y);
+      max_x = q->points[i].x > max_x ? q->points[i].x : max_x;
+      max_y = q->points[i].y > max_y ? q->points[i].y : max_y;
     }
 
   graphene_rect_init (r, min_x, min_y, max_x - min_x, max_y - min_y);
