@@ -4,7 +4,8 @@ EXTRA_DIST = \
 	build/autotools/glibtests.m4 \
 	build/autotools/glib-tap.mk \
 	build/autotools/tap-driver.sh \
-	build/autotools/tap-test
+	build/autotools/tap-test \
+	build/msvc/stdbool.h
 
 SUBDIRS = src
 
