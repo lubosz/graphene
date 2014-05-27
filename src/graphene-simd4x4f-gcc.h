@@ -24,11 +24,9 @@
 #ifndef __GRAPHENE_SIMD4X4F_GCC_H__
 #define __GRAPHENE_SIMD4X4F_GCC_H__
 
-#include "graphene-simd4f-gcc.h"
+#include "graphene-macros.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+GRAPHENE_BEGIN_DECLS
 
 static inline void
 graphene_simd4x4f_transpose_in_place (graphene_simd4x4f_t *s)
@@ -44,8 +42,6 @@ graphene_simd4x4f_transpose_in_place (graphene_simd4x4f_t *s)
   s->w = graphene_simd4f_init (s_x.f[3], s_y.f[3], s_z.f[3], s_w.f[3]);
 }
 
-#ifdef __cplusplus
-}
-#endif
+GRAPHENE_END_DECLS
 
 #endif /* __GRAPHENE_SIMD4X4F_GCC_H__ */

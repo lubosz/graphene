@@ -27,7 +27,7 @@
 #include "graphene-types.h"
 #include "graphene-point.h"
 
-G_BEGIN_DECLS
+GRAPHENE_BEGIN_DECLS
 
 struct _graphene_quad_t
 {
@@ -58,6 +58,6 @@ GRAPHENE_AVAILABLE_IN_1_0
 void                    graphene_quad_bounds            (const graphene_quad_t  *q,
                                                          graphene_rect_t        *r);
 
-G_END_DECLS
+GRAPHENE_END_DECLS
 
 #endif /* __GRAPHENE_QUAD_H__ */

@@ -24,9 +24,9 @@
 #ifndef __GRAPHENE_SIMD4X4F_COMMON_H__
 #define __GRAPHENE_SIMD4X4F_COMMON_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "graphene-macros.h"
+
+GRAPHENE_BEGIN_DECLS
 
 static inline void
 graphene_simd4x4f_sum (const graphene_simd4x4f_t *a,
@@ -491,8 +491,6 @@ graphene_simd4x4f_is_2d (const graphene_simd4x4f_t *m)
   return TRUE;
 }
 
-#ifdef __cplusplus
-}
-#endif
+GRAPHENE_END_DECLS
 
 #endif /* __GRAPHENE_SIMD4X4F_COMMON_H__ */

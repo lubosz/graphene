@@ -27,9 +27,9 @@
 #include <xmmintrin.h>
 #include <string.h>  // memcpy
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "graphene-macros.h"
+
+GRAPHENE_BEGIN_DECLS
 
 /* part of the implementation of the SSE operations is based on the
  * equivalent C++ implementation by Mikko Lehtonen, which is licensed
@@ -295,8 +295,6 @@ graphene_simd4f_cmp_neq (graphene_simd4f_t a,
   return _mm_movemask_epi8 (res) == 0xffff;
 }
 
-#ifdef __cplusplus
-}
-#endif
+GRAPHENE_END_DECLS
 
 #endif

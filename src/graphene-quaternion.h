@@ -31,7 +31,7 @@
 #include "graphene-types.h"
 #include "graphene-vec4.h"
 
-G_BEGIN_DECLS
+GRAPHENE_BEGIN_DECLS
 
 struct _graphene_quaternion_t
 {
@@ -102,6 +102,6 @@ void                    graphene_quaternion_slerp                       (const g
                                                                          float                        factor,
                                                                          graphene_quaternion_t       *res);
 
-G_END_DECLS
+GRAPHENE_END_DECLS
 
 #endif /* __GRAPHENE_QUATERNION_H__ */

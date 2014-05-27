@@ -26,6 +26,10 @@
 
 #warn "ARM NEON support is experimental and requires testing."
 
+#include "graphene-macros.h"
+
+GRAPHENE_BEGIN_DECLS
+
 static inline void
 graphene_simd4x4f_transpose_in_place (graphene_simd4x4f_t *s)
 {
@@ -44,5 +48,7 @@ graphene_simd4x4f_transpose_in_place (graphene_simd4x4f_t *s)
   s->z = dz;
   s->w = dw;
 }
+
+GRAPHENE_END_DECLS
 
 #endif /* __GRAPHENE_SIMD4X4F_NEON_H__ */

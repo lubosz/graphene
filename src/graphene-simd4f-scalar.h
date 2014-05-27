@@ -27,10 +27,9 @@
 #include <math.h>
 #include <string.h>
 
-/* don't want to include glib.h just for G_BEGIN_DECLS/G_END_DECLS */
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "graphene-macros.h"
+
+GRAPHENE_BEGIN_DECLS
 
 #define GRAPHENE_SIMD4F_GET(f) \
 static inline float \
@@ -290,8 +289,6 @@ graphene_simd4f_cmp_neq (graphene_simd4f_t a,
          a.w != b.w;
 }
 
-#ifdef __cplusplus
-}
-#endif
+GRAPHENE_END_DECLS
 
 #endif

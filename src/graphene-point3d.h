@@ -30,7 +30,7 @@
 
 #include "graphene-types.h"
 
-G_BEGIN_DECLS
+GRAPHENE_BEGIN_DECLS
 
 #define GRAPHENE_POINT3D_INIT(x,y,z)    { x, y, z }
 #define GRAPHENE_POINT3D_INIT_ZERO      GRAPHENE_POINT3D_INIT (0.f, 0.f, 0.f)
@@ -96,6 +96,6 @@ void                            graphene_point3d_interpolate            (const g
 GRAPHENE_AVAILABLE_IN_1_0
 const graphene_point3d_t *      graphene_point3d_zero                   (void);
 
-G_END_DECLS
+GRAPHENE_END_DECLS
 
 #endif /* __GRAPHENE_POINT3D_H__ */

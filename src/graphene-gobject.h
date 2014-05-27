@@ -27,7 +27,7 @@
 #include <glib-object.h>
 #include <graphene.h>
 
-G_BEGIN_DECLS
+GRAPHENE_BEGIN_DECLS
 
 #define GRAPHENE_TYPE_POINT             (graphene_point_get_type ())
 
@@ -79,6 +79,6 @@ GType graphene_quaternion_get_type (void);
 GRAPHENE_AVAILABLE_IN_1_0
 GType graphene_matrix_get_type (void);
 
-G_END_DECLS
+GRAPHENE_END_DECLS
 
 #endif /* __GRAPHENE_GOBJECT_H__ */

@@ -24,9 +24,9 @@
 #ifndef __GRAPHENE_SIMD4X4F_SCALAR_H__
 #define __GRAPHENE_SIMD4X4F_SCALAR_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "graphene-macros.h"
+
+GRAPHENE_BEGIN_DECLS
 
 static inline void
 graphene_simd4x4f_transpose_in_place (graphene_simd4x4f_t *s)
@@ -54,8 +54,6 @@ graphene_simd4x4f_transpose_in_place (graphene_simd4x4f_t *s)
   s->w.w = m.w.w;
 }
 
-#ifdef __cplusplus
-}
-#endif
+GRAPHENE_END_DECLS
 
 #endif /* __GRAPHENE_SIMD4X4F_SCALAR_H__ */

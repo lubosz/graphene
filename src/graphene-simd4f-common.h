@@ -24,9 +24,9 @@
 #ifndef __GRAPHENE_SIMD4F_COMMON_H__
 #define __GRAPHENE_SIMD4F_COMMON_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "graphene-macros.h"
+
+GRAPHENE_BEGIN_DECLS
 
 static inline graphene_simd4f_t
 graphene_simd4f_madd (graphene_simd4f_t m1,
@@ -146,8 +146,6 @@ graphene_simd4f_interpolate (graphene_simd4f_t a,
                                                    graphene_simd4f_splat (f)));
 }
 
-#ifdef __cplusplus
-}
-#endif
+GRAPHENE_END_DECLS
 
 #endif /* __GRAPHENE_SIMD4F_COMMON_H__ */

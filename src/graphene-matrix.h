@@ -26,7 +26,7 @@
 
 #include "graphene-types.h"
 
-G_BEGIN_DECLS
+GRAPHENE_BEGIN_DECLS
 
 /**
  * graphene_matrix_t:
@@ -216,6 +216,6 @@ void                    graphene_matrix_interpolate             (const graphene_
                                                                  double                    factor,
                                                                  graphene_matrix_t        *res);
 
-G_END_DECLS
+GRAPHENE_END_DECLS
 
 #endif /* __GRAPHENE_MATRIX_H__ */

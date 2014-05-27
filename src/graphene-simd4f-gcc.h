@@ -27,9 +27,9 @@
 #include <math.h>
 #include <string.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "graphene-macros.h"
+
+GRAPHENE_BEGIN_DECLS
 
 typedef int graphene_simd4i_t __attribute__((vector_size (16)));
 
@@ -311,8 +311,6 @@ graphene_simd4f_cmp_neq (graphene_simd4f_t a,
   return u_res.i[0] == 0 && u_res.i[1] == 0 && u_res.i[2] == 0 && u_res.i[3] == 0;
 }
 
-#ifdef __cplusplus
-}
-#endif
+GRAPHENE_END_DECLS
 
 #endif /* __GRAPHENE_SIMD4F_GCC_H__ */

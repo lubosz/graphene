@@ -24,13 +24,13 @@
 #ifndef __GRAPHENE_SIMD4X4F_H__
 #define __GRAPHENE_SIMD4X4F_H__
 
-#include "graphene-config.h"
-#include "graphene-simd4f.h"
 #include <math.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "graphene-config.h"
+#include "graphene-macros.h"
+#include "graphene-simd4f.h"
+
+GRAPHENE_BEGIN_DECLS
 
 /* graphene_simd4x4f_t uses four graphene_simd4f_t vectors.
  *
@@ -100,8 +100,6 @@ graphene_simd4x4f_to_float (const graphene_simd4x4f_t *m,
 
 #include "graphene-simd4x4f-common.h"
 
-#ifdef __cplusplus
-}
-#endif
+GRAPHENE_END_DECLS
 
 #endif /* __GRAPHENE_SIMD4X4F_H__ */

@@ -28,9 +28,9 @@
 
 #include <arm_neon.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "graphene-macros.h"
+
+GRAPHENE_BEGIN_DECLS
 
 typedef union {
   graphene_simd4f_t s;
@@ -329,9 +329,6 @@ graphene_simd4f_cmp_neq (graphene_simd4f_t a,
          u_a.f[3] != u_b.f[3];
 }
 
-
-#ifdef __cplusplus
-}
-#endif
+GRAPHENE_END_DECLS
 
 #endif
