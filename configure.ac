@@ -66,14 +66,7 @@ GRAPHENE_LT_REVISION=lt_revision
 GRAPHENE_LT_AGE=lt_age
 GRAPHENE_LT_VERSION="$GRAPHENE_LT_CURRENT:$GRAPHENE_LT_REVISION:$GRAPHENE_LT_AGE"
 GRAPHENE_LT_LDFLAGS="-version-info $GRAPHENE_LT_VERSION"
-
-dnl === Dependencies ==========================================================
-
-PKG_CHECK_MODULES(GRAPHENE_DEPS, [glib-2.0 >= glib_req_version])
-GRAPHENE_REQS="glib-2.0"
-
-GLIB_PREFIX="`$PKG_CONFIG --variable=prefix glib-2.0`"
-AC_SUBST(GLIB_PREFIX)
+GRAPHENE_REQS=""
 
 dnl === Platform checks =======================================================
 
@@ -396,7 +389,20 @@ AM_CONDITIONAL(BUILD_GOBJECT, [test "x$build_gobject" = xyes])
 
 dnl === Test suite ============================================================
 
+AC_ARG_ENABLE([tests],
+              [AS_HELP_STRING([--enable-tests], [Enable tests])],
+              [enable_tests=$enableval],
+              [enable_tests=yes])
+AS_IF([test "x$enable_tests" = xyes],
+      [
+        PKG_CHECK_MODULES(GRAPHENE_TESTS, [glib-2.0 >= glib_req_version])
+        AC_SUBST(GRAPHENE_TESTS_CFLAGS)
+        AC_SUBST(GRAPHENE_TESTS_LIBS)
+      ])
+
 GLIB_TESTS
+
+AM_CONDITIONAL(BUILD_TESTS, [test "x$enable_tests" = xyes])
 
 dnl === Code coverage =========================================================
 
@@ -473,6 +479,13 @@ AC_ARG_ENABLE([benchmarks],
               [AS_HELP_STRING([--enable-benchmarks], [Enable benchmarks])],
               [build_benchmarks=$enableval],
               [build_benchmarks=no])
+
+AS_IF([test "x$build_benchmarks" = xyes],
+      [
+        PKG_CHECK_MODULES(GRAPHENE_BENCHMARK, [glib-2.0 >= glib_req_version])
+        AC_SUBST(GRAPHENE_BENCHMARK_CFLAGS)
+        AC_SUBST(GRAPHENE_BENCHMARK_LIBS)
+      ])
 
 AM_CONDITIONAL(BUILD_BENCHMARKS, [test "x$build_benchmarks" = xyes])
 
@@ -592,6 +605,7 @@ Graphene - $VERSION (${GRAPHENE_RELEASE_STATUS})
 
   • Debug level: ${enable_debug}
   • Compiler flags: ${GRAPHENE_CFLAGS} ${MAINTAINER_CFLAGS}
+  • Tests: ${enable_tests}
   • Code coverage: ${use_gcov}
   • Benchmarks: ${build_benchmarks}
   • GObject types: ${build_gobject}

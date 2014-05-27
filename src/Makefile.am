@@ -7,8 +7,13 @@ DISTCLEANFILES =
 lib_LTLIBRARIES =
 DIST_SUBDIRS = . tests bench
 
-# always build this directory before building the tests suite
-SUBDIRS = . tests
+# always build this directory before building everything else
+SUBDIRS = .
+
+if BUILD_TESTS
+# conditionally recurse only if we build the test suite
+SUBDIRS += tests
+endif
 
 if BUILD_BENCHMARKS
 # conditionally recurse only if we build the benchmarks suite

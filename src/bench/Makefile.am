@@ -13,8 +13,8 @@ TESTS =
 
 # common library for benchmark utilities
 libgraphene_bench_la_CPPFLAGS = -I$(top_srcdir)/src -I$(top_builddir)/src -DG_LOG_DOMAIN=\"Graphene-Bench\"
-libgraphene_bench_la_CFLAGS = $(GRAPHENE_CFLAGS) $(MAINTAINER_CFLAGS)
-libgraphene_bench_la_LIBADD = $(GRAPHENE_LIBS)
+libgraphene_bench_la_CFLAGS = $(GRAPHENE_BENCHMARK_CFLAGS) $(MAINTAINER_CFLAGS)
+libgraphene_bench_la_LIBADD = $(top_builddir)/src/libgraphene-1.0.la $(GRAPHENE_BENCHMARK_LIBS)
 libgraphene_bench_la_SOURCES = graphene-bench-utils.h graphene-bench-utils.c
 noinst_LTLIBRARIES += libgraphene-bench.la
 
