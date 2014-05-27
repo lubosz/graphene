@@ -25,22 +25,29 @@ the whole point of writing the library in the first place.
 
 ### Dependencies
 
-Graphene is a C library. For this reason alone, it depends on GLib, as
-GLib gives us a fairly decent, portable, and maintained layer to depend
-on, instead of requiring me to re-implement a ton of code.
+Graphene has little to no dependencies.
 
-Graphene does not use the GObject type system, as of yet, but it may grow
-an optional dependency on it through a separate shared object, especially
-if in the future I'm going to generate introspection data for the benefit
-of GObject-based language bindings.
+Graphene optionally uses the GObject type system to provide types that can
+be used by GObject-based libraries for properties and marshalling of signal
+arguments. The type symbols are compiled inside the same shared library as
+all the other symbols. This dependency can be disabled by passing the
+`--disable-gobject-types` command line switch to the `configure` script.
+It is possible to check if Graphene has been compiled with GObject types by
+checking if the `graphene-gobject-1.0` pkg-config module exists and it is
+installed on your system.
 
-Graphene contains optimizations for speeding up vector operations; those
+Graphene depends on GLib for its test suite. It is possible to disable
+building the test suite by passing the `--disable-tests` command line switch
+to the `configure` script. Similarly, the micro-benchmark suite also depends
+on GLib.
+
+Graphene contains fast paths for speeding up vector operations; those
 optimizations are optional, and used only if both Graphene was compiled
 with support for them *and* if the system you're running on has them.
 Currently, Graphene supports the following platform-specific fast paths:
 
  * Streaming SIMD Extensions (SSE) 2
- * ARM NEON
+ * ARM NEON (*experimental*)
  * GCC vector extensions
 
 In the remote case in which none of these optimizations are available,
