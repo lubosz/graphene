@@ -28,7 +28,6 @@
 #error "Only graphene.h can be included directly."
 #endif
 
-#include <glib.h>
 #include <stdbool.h>
 
 #include "graphene-config.h"
