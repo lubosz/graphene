@@ -102,6 +102,8 @@ AC_MSG_RESULT([$platform_win32])
 AM_CONDITIONAL(OS_LINUX, [test "$platform_linux" = "yes"])
 AM_CONDITIONAL(OS_WIN32, [test "$platform_win32" = "yes"])
 
+AC_CHECK_HEADER([stdbool.h], [], [AC_MSG_ERROR([Graphene requires stdbool.h to be available])])
+
 dnl === Fast paths ============================================================
 
 # Check for GCC vectors
