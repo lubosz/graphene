@@ -30,7 +30,34 @@
 
 #include "graphene-version.h"
 
-#define GRAPHENE_ENCODE_VERSION(major,minor,micro) \
+#if    __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
+#define _GRAPHENE_DEPRECATED __attribute__((__deprecated__))
+#elif defined(_MSC_VER) && (_MSC_VER >= 1300)
+#define _GRAPHENE_DEPRECATED __declspec(deprecated)
+#else
+#define _GRAPHENE_DEPRECATED
+#endif
+
+#if    __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
+#define _GRAPHENE_DEPRECATED_FOR(f) __attribute__((__deprecated__("Use '" #f "' instead")))
+#elif defined(_MSC_FULL_VER) && (_MSC_FULL_VER > 140050320)
+#define _GRAPHENE_DEPRECATED_FOR(f) __declspec(deprecated("is deprecated. Use '" #f "' instead"))
+#else
+#define _GRAPHENE_DEPRECATED_FOR(f) GRAPHENE_DEPRECATED
+#endif
+
+#if    __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
+#define _GRAPHENE_UNAVAILABLE(maj,min) __attribute__((deprecated("Not available before " #maj "." #min)))
+#elif defined(_MSC_FULL_VER) && (_MSC_FULL_VER > 140050320)
+#define _GRAPHENE_UNAVAILABLE(maj,min) __declspec(deprecated("is not available before " #maj "." #min))
+#else
+#define _GRAPHENE_UNAVAILABLE(maj,min) GRAPHENE_DEPRECATED
+#endif
+
+#define GRAPHENE_ENCODE_VERSION(major,minor) \
+  ((major) << 16 | (minor) << 8)
+
+#define GRAPHENE_ENCODE_FULL_VERSION(major,minor,micro) \
   ((major) << 24 | (minor) << 16 | (micro) << 8)
 
 #ifdef GRAPHENE_DISABLE_DEPRECATION_WARNINGS
@@ -38,15 +65,15 @@
 # define GRAPHENE_DEPRECATED_FOR(f)     _GRAPHENE_PUBLIC
 # define GRAPHENE_UNAVAILABLE(maj,min)  _GRAPHENE_PUBLIC
 #else
-# define GRAPHENE_DEPRECATED            G_DEPRECATED _GRAPHENE_PUBLIC
-# define GRAPHENE_DEPRECATED_FOR(f)     G_DEPRECATED_FOR(f) _GRAPHENE_PUBLIC
-# define GRAPHENE_UNAVAILABLE(maj,min)  G_UNAVAILABLE(maj,min) _GRAPHENE_PUBLIC
+# define GRAPHENE_DEPRECATED            _GRAPHENE_DEPRECATED _GRAPHENE_PUBLIC
+# define GRAPHENE_DEPRECATED_FOR(f)     _GRAPHENE_DEPRECATED_FOR(f) _GRAPHENE_PUBLIC
+# define GRAPHENE_UNAVAILABLE(maj,min)  _GRAPHENE_UNAVAILABLE(maj,min) _GRAPHENE_PUBLIC
 #endif
 
 #define GRAPHENE_VERSION                \
-  GRAPHENE_ENCODE_VERSION (GRAPHENE_MAJOR_VERSION, \
-                           GRAPHENE_MINOR_VERSION, \
-                           GRAPHENE_MICRO_VERSION)
+  GRAPHENE_ENCODE_FULL_VERSION (GRAPHENE_MAJOR_VERSION, \
+                                GRAPHENE_MINOR_VERSION, \
+                                GRAPHENE_MICRO_VERSION)
 
 #define GRAPHENE_CHECK_VERSION(major,minor,micro) \
   ((major) > GRAPHENE_MAJOR_VERSION || \
@@ -57,20 +84,20 @@
  * this means the next stable target.
  */
 #if (GRAPHENE_MINOR_VERSION == 99)
-# define GRAPHENE_VERSION_CUR_STABLE    (G_ENCODE_VERSION (GRAPHENE_MAJOR_VERSION + 1, 0))
+# define GRAPHENE_VERSION_CUR_STABLE    (GRAPHENE_ENCODE_VERSION (GRAPHENE_MAJOR_VERSION + 1, 0))
 #elif (GRAPHENE_MINOR_VERSION % 2)
-# define GRAPHENE_VERSION_CUR_STABLE    (G_ENCODE_VERSION (GRAPHENE_MAJOR_VERSION, GRAPHENE_MINOR_VERSION + 1))
+# define GRAPHENE_VERSION_CUR_STABLE    (GRAPHENE_ENCODE_VERSION (GRAPHENE_MAJOR_VERSION, GRAPHENE_MINOR_VERSION + 1))
 #else
-# define GRAPHENE_VERSION_CUR_STABLE    (G_ENCODE_VERSION (GRAPHENE_MAJOR_VERSION, GRAPHENE_MINOR_VERSION))
+# define GRAPHENE_VERSION_CUR_STABLE    (GRAPHENE_ENCODE_VERSION (GRAPHENE_MAJOR_VERSION, GRAPHENE_MINOR_VERSION))
 #endif
 
 /* evaluates to the previous stable version */
 #if (GRAPHENE_MINOR_VERSION == 99)
-# define GRAPHENE_VERSION_PREV_STABLE   (G_ENCODE_VERSION (GRAPHENE_MAJOR_VERSION + 1, 0))
+# define GRAPHENE_VERSION_PREV_STABLE   (GRAPHENE_ENCODE_VERSION (GRAPHENE_MAJOR_VERSION + 1, 0))
 #elif (GRAPHENE_MINOR_VERSION % 2)
-# define GRAPHENE_VERSION_PREV_STABLE   (G_ENCODE_VERSION (GRAPHENE_MAJOR_VERSION, GRAPHENE_MINOR_VERSION - 1))
+# define GRAPHENE_VERSION_PREV_STABLE   (GRAPHENE_ENCODE_VERSION (GRAPHENE_MAJOR_VERSION, GRAPHENE_MINOR_VERSION - 1))
 #else
-# define GRAPHENE_VERSION_PREV_STABLE   (G_ENCODE_VERSION (GRAPHENE_MAJOR_VERSION, GRAPHENE_MINOR_VERSION - 2))
+# define GRAPHENE_VERSION_PREV_STABLE   (GRAPHENE_ENCODE_VERSION (GRAPHENE_MAJOR_VERSION, GRAPHENE_MINOR_VERSION - 2))
 #endif
 
 #ifndef GRAPHENE_VERSION_MIN_REQUIRED
@@ -98,7 +125,7 @@
  * remember to add new macros at the beginning of each development cycle
  */
 
-#define GRAPHENE_VERSION_1_0    (G_ENCODE_VERSION (1, 0))
+#define GRAPHENE_VERSION_1_0    (GRAPHENE_ENCODE_VERSION (1, 0))
 
 /* unconditional */
 #define GRAPHENE_DEPRECATED_IN_1_0              GRAPHENE_DEPRECATED
