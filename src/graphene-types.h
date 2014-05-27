@@ -29,6 +29,7 @@
 #endif
 
 #include <glib.h>
+#include <stdbool.h>
 
 #include "graphene-config.h"
 #include "graphene-macros.h"

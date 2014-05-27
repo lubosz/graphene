@@ -269,7 +269,7 @@ graphene_simd4f_flip_sign_1010 (graphene_simd4f_t s)
   return graphene_simd4f_init (-s.x, s.y, -s.z, s.w);
 }
 
-static inline gboolean
+static inline bool
 graphene_simd4f_cmp_eq (graphene_simd4f_t a,
                         graphene_simd4f_t b)
 {
@@ -279,7 +279,7 @@ graphene_simd4f_cmp_eq (graphene_simd4f_t a,
          a.w == b.w;
 }
 
-static inline gboolean
+static inline bool
 graphene_simd4f_cmp_neq (graphene_simd4f_t a,
                          graphene_simd4f_t b)
 {

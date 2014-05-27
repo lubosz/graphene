@@ -154,30 +154,30 @@ graphene_point3d_to_vec3 (const graphene_point3d_t *p,
   v->value = graphene_simd4f_init (p->x, p->y, p->z, 0.f);
 }
 
-gboolean
+bool
 graphene_point3d_equal (const graphene_point3d_t *a,
                         const graphene_point3d_t *b)
 {
   if (a == b)
-    return TRUE;
+    return true;
 
   if (a == NULL || b == NULL)
-    return FALSE;
+    return false;
 
   return graphene_point3d_near (a, b, GRAPHENE_FLOAT_EPSILON);
 }
 
-gboolean
+bool
 graphene_point3d_near (const graphene_point3d_t *a,
                        const graphene_point3d_t *b,
                        float                     epsilon)
 {
   graphene_simd4f_t v_a, v_b, v_res;
 
-  g_return_val_if_fail (a != NULL && b != NULL, FALSE);
+  g_return_val_if_fail (a != NULL && b != NULL, false);
 
   if (a == b)
-    return TRUE;
+    return true;
 
   v_a = graphene_simd4f_init (a->x, a->y, a->z, 0.f);
   v_b = graphene_simd4f_init (b->x, b->y, b->z, 0.f);

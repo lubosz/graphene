@@ -114,14 +114,14 @@ graphene_simd4f_normalize2 (graphene_simd4f_t v)
   return graphene_simd4f_mul (v, invlen);
 }
 
-static inline gboolean
+static inline bool
 graphene_simd4f_is_zero4 (graphene_simd4f_t v)
 {
   graphene_simd4f_t zero = graphene_simd4f_init_zero ();
   return graphene_simd4f_cmp_eq (v, zero);
 }
 
-static inline gboolean
+static inline bool
 graphene_simd4f_is_zero3 (graphene_simd4f_t v)
 {
   return graphene_simd4f_get_x (v) == 0.f &&
@@ -129,7 +129,7 @@ graphene_simd4f_is_zero3 (graphene_simd4f_t v)
          graphene_simd4f_get_z (v) == 0.f;
 }
 
-static inline gboolean
+static inline bool
 graphene_simd4f_is_zero2 (graphene_simd4f_t v)
 {
   return graphene_simd4f_get_x (v) == 0.f &&

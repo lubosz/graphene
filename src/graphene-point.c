@@ -95,15 +95,15 @@ graphene_point_init_from_point (graphene_point_t       *p,
   return p;
 }
 
-gboolean
+bool
 graphene_point_equal (const graphene_point_t *a,
                       const graphene_point_t *b)
 {
   if (a == b)
-    return TRUE;
+    return true;
 
   if (a == NULL || b == NULL)
-    return FALSE;
+    return false;
 
   return graphene_point_near (a, b, GRAPHENE_FLOAT_EPSILON);
 }
@@ -134,17 +134,17 @@ graphene_point_distance (const graphene_point_t *a,
   return graphene_simd4f_get_x (graphene_simd4f_length2 (res));
 }
 
-gboolean
+bool
 graphene_point_near (const graphene_point_t *a,
                      const graphene_point_t *b,
                      float                   epsilon)
 {
   graphene_simd4f_t s_a, s_b, res;
 
-  g_return_val_if_fail (a != NULL && b != NULL, FALSE);
+  g_return_val_if_fail (a != NULL && b != NULL, false);
 
   if (a == b)
-    return TRUE;
+    return true;
 
   s_a = graphene_simd4f_init (a->x, a->y, 0.f, 0.f);
   s_b = graphene_simd4f_init (b->x, b->y, 0.f, 0.f);

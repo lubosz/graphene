@@ -341,7 +341,7 @@ enum {
 };
 
 static graphene_vec2_t static_vec2[N_STATIC_VEC2];
-static gboolean static_vec2_init = FALSE;
+static bool static_vec2_init = false;
 
 static inline void
 init_static_vec2 (void)
@@ -354,7 +354,7 @@ init_static_vec2 (void)
   static_vec2[VEC2_X_AXIS].value = graphene_simd4f_init (1.0f, 0.0f, 0.0f, 0.0f);
   static_vec2[VEC2_Y_AXIS].value = graphene_simd4f_init (0.0f, 1.0f, 0.0f, 0.0f);
 
-  static_vec2_init = TRUE;
+  static_vec2_init = true;
 }
 
 /**
@@ -883,7 +883,7 @@ enum {
 };
 
 static graphene_vec3_t static_vec3[N_STATIC_VEC3];
-static gboolean static_vec3_init = FALSE;
+static bool static_vec3_init = false;
 
 static inline void
 init_static_vec3 (void)
@@ -897,7 +897,7 @@ init_static_vec3 (void)
   static_vec3[VEC3_Y_AXIS].value = graphene_simd4f_init (0.0f, 1.0f, 0.0f, 0.0f);
   static_vec3[VEC3_Z_AXIS].value = graphene_simd4f_init (0.0f, 0.0f, 1.0f, 0.0f);
 
-  static_vec3_init = TRUE;
+  static_vec3_init = true;
 }
 
 const graphene_vec3_t *
@@ -1331,7 +1331,7 @@ enum {
 };
 
 static graphene_vec4_t static_vec4[N_STATIC_VEC4];
-static gboolean static_vec4_init = FALSE;
+static bool static_vec4_init = false;
 
 static inline void
 init_static_vec4 (void)
@@ -1346,7 +1346,7 @@ init_static_vec4 (void)
   static_vec4[VEC4_Z_AXIS].value = graphene_simd4f_init (0.0f, 0.0f, 1.0f, 0.0f);
   static_vec4[VEC4_W_AXIS].value = graphene_simd4f_init (0.0f, 0.0f, 0.0f, 1.0f);
 
-  static_vec4_init = TRUE;
+  static_vec4_init = true;
 }
 
 const graphene_vec4_t *

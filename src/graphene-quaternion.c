@@ -288,17 +288,17 @@ graphene_quaternion_to_angle_vec3 (const graphene_quaternion_t *q,
   graphene_vec3_init (axis, q_n.x / sin_a, q_n.y / sin_a, q_n.z / sin_a);
 }
 
-gboolean
+bool
 graphene_quaternion_equal (const graphene_quaternion_t *a,
                            const graphene_quaternion_t *b)
 {
   graphene_simd4f_t v_a, v_b;
 
   if (a == b)
-    return TRUE;
+    return true;
 
   if (a == NULL || b == NULL)
-    return FALSE;
+    return false;
 
   v_a = graphene_simd4f_init (a->x, a->y, a->z, a->w);
   v_b = graphene_simd4f_init (b->x, b->y, b->z, b->w);

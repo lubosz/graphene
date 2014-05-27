@@ -72,14 +72,14 @@ graphene_quad_init_from_rect (graphene_quad_t       *q,
   return q;
 }
 
-gboolean
+bool
 graphene_quad_contains (const graphene_quad_t  *q,
                         const graphene_point_t *p)
 {
   graphene_line_segment_t l1, l2, l3, l4;
 
-  g_return_val_if_fail (q != NULL, FALSE);
-  g_return_val_if_fail (p != NULL, FALSE);
+  g_return_val_if_fail (q != NULL, false);
+  g_return_val_if_fail (p != NULL, false);
 
   l1 = graphene_line_segment_init (&q->points[0], &q->points[1]);
   l2 = graphene_line_segment_init (&q->points[1], &q->points[2]);

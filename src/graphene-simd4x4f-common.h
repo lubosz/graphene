@@ -458,7 +458,7 @@ graphene_simd4x4f_determinant (const graphene_simd4x4f_t *m,
     *invdet_r = invdet;
 }
 
-static inline gboolean
+static inline bool
 graphene_simd4x4f_is_identity (const graphene_simd4x4f_t *m)
 {
   const graphene_simd4f_t r0 = graphene_simd4f_init (1.0f, 0.0f, 0.0f, 0.0f);
@@ -472,23 +472,23 @@ graphene_simd4x4f_is_identity (const graphene_simd4x4f_t *m)
          graphene_simd4f_cmp_eq (m->w, r3);
 }
 
-static inline gboolean
+static inline bool
 graphene_simd4x4f_is_2d (const graphene_simd4x4f_t *m)
 {
   graphene_simd4x4f_t t;
 
   if (graphene_simd4f_cmp_neq (m->z, graphene_simd4f_init (0.f, 0.f, 1.f, 0.f)))
-    return FALSE;
+    return false;
 
   graphene_simd4x4f_transpose (m, &t);
 
   if (graphene_simd4f_cmp_neq (t.z, graphene_simd4f_init (0.f, 0.f, 1.f, 0.f)))
-    return FALSE;
+    return false;
 
   if (graphene_simd4f_cmp_neq (t.w, graphene_simd4f_init (0.f, 0.f, 0.f, 1.f)))
-    return FALSE;
+    return false;
 
-  return TRUE;
+  return true;
 }
 
 GRAPHENE_END_DECLS

@@ -93,17 +93,17 @@ graphene_rect_init_from_rect (graphene_rect_t       *r,
   return r;
 }
 
-gboolean
+bool
 graphene_rect_equal (const graphene_rect_t *a,
                      const graphene_rect_t *b)
 {
   graphene_rect_t r_a, r_b;
 
   if (a == b)
-    return TRUE;
+    return true;
 
   if (a == NULL || b == NULL)
-    return FALSE;
+    return false;
 
   r_a = *a;
   r_b = *b;
@@ -248,7 +248,7 @@ graphene_rect_union (const graphene_rect_t *a,
   res->size.height = MAX (ra.size.height, rb.size.height);
 }
 
-gboolean
+bool
 graphene_rect_intersection (const graphene_rect_t *a,
                             const graphene_rect_t *b,
                             graphene_rect_t       *res)
@@ -256,7 +256,7 @@ graphene_rect_intersection (const graphene_rect_t *a,
   graphene_rect_t ra, rb;
   float x_1, y_1, x_2, y_2;
 
-  g_return_val_if_fail (a != NULL && b != NULL, FALSE);
+  g_return_val_if_fail (a != NULL && b != NULL, false);
 
   ra = *a;
   rb = *b;
@@ -274,22 +274,22 @@ graphene_rect_intersection (const graphene_rect_t *a,
       if (res != NULL)
         graphene_rect_init (res, 0.0f, 0.0f, 0.0f, 0.0f);
 
-      return FALSE;
+      return false;
     }
 
   if (res != NULL)
     graphene_rect_init (res, x_1, y_1, x_2 - x_1, y_2 - y_1);
 
-  return TRUE;
+  return true;
 }
 
-gboolean
+bool
 graphene_rect_contains_point (const graphene_rect_t  *r,
                               const graphene_point_t *p)
 {
   graphene_rect_t rr;
 
-  g_return_val_if_fail (r != NULL && p != NULL, FALSE);
+  g_return_val_if_fail (r != NULL && p != NULL, false);
 
   rr = *r;
   graphene_rect_normalize_internal (&rr);
@@ -300,13 +300,13 @@ graphene_rect_contains_point (const graphene_rect_t  *r,
          p->y <= (rr.origin.y + rr.size.height);
 }
 
-gboolean
+bool
 graphene_rect_contains_rect (const graphene_rect_t *a,
                              const graphene_rect_t *b)
 {
   graphene_rect_t res;
 
-  g_return_val_if_fail (a != NULL && b != NULL, FALSE);
+  g_return_val_if_fail (a != NULL && b != NULL, false);
 
   graphene_rect_union (a, b, &res);
 
