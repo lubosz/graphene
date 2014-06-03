@@ -129,10 +129,13 @@ graphene_simd4x4f_matrix_mul (const graphene_simd4x4f_t *a,
                               const graphene_simd4x4f_t *b,
                               graphene_simd4x4f_t       *res)
 {
-  graphene_simd4x4f_vec4_mul (a, &b->x, &res->x);
-  graphene_simd4x4f_vec4_mul (a, &b->y, &res->y);
-  graphene_simd4x4f_vec4_mul (a, &b->z, &res->z);
-  graphene_simd4x4f_vec4_mul (a, &b->w, &res->w);
+  graphene_simd4x4f_t transposed = *a;
+  graphene_simd4x4f_transpose_in_place (&transposed);
+
+  graphene_simd4x4f_vec4_mul (&transposed, &b->x, &res->x);
+  graphene_simd4x4f_vec4_mul (&transposed, &b->y, &res->y);
+  graphene_simd4x4f_vec4_mul (&transposed, &b->z, &res->z);
+  graphene_simd4x4f_vec4_mul (&transposed, &b->w, &res->w);
 }
 
 static inline void
