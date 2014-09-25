@@ -117,6 +117,44 @@ matrix_scale (void)
 }
 
 static void
+matrix_multiplication_order (void)
+{
+  graphene_matrix_t left;
+  graphene_matrix_t right;
+  graphene_matrix_t left_first;
+  graphene_matrix_t right_first;
+
+  float floats1[16] = {
+     1, 2, 3, 4,
+     5, 6, 7, 8,
+     9,10,11,12,
+    13,14,15,16,
+  };
+
+  float floats2[16] = {
+    16,15,14,13,
+    12,11,10, 9,
+     8, 7, 6, 5,
+     4, 3, 2, 1
+  };
+
+  graphene_matrix_init_from_float(&left, floats1);
+  graphene_matrix_init_from_float(&right, floats2);
+
+  graphene_matrix_multiply (&left, &right, &left_first);
+  graphene_matrix_multiply (&right, &left, &right_first);
+
+  g_print("left\n");
+  graphene_matrix_print (&left);
+  g_print("right\n");
+  graphene_matrix_print (&right);
+  g_print("left * right\n");
+  graphene_matrix_print (&left_first);
+  g_print("right * left\n");
+  graphene_matrix_print (&right_first);
+}
+
+static void
 matrix_neutral_element (void)
 {
   graphene_matrix_t identity;
@@ -155,6 +193,7 @@ main (int argc, char *argv[])
   g_test_add_func ("/matrix/rotation", matrix_rotation);
   g_test_add_func ("/matrix/translation", matrix_translation);
   g_test_add_func ("/matrix/neutral_element", matrix_neutral_element);
+  g_test_add_func ("/matrix/multiplication_order", matrix_multiplication_order);
 
   return g_test_run ();
 }
